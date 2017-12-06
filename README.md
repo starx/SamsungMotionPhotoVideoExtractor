@@ -26,6 +26,6 @@ This script can be installed if required as well. In Linux / OSX system, you can
 
 Then use, similarly
 
-   extractVideo_SamsungMotionPhoto.sh /path/to/pictures
+    extractVideo_SamsungMotionPhoto.sh /path/to/pictures
 
 __Note:__ _If path is not specified it will read from current path_
