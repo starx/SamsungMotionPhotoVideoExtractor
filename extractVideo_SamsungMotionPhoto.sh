@@ -44,6 +44,8 @@ function extractVideo_SamsungMotionPhoto {
 		# Generate a full path of destination file
 		DESTINATION_FILE="$FILE_DIRECTORY/$FILE_NAME.mp4"
 
+		# Check if destination file already exists
+		# If is does, assume that is the same file
 		if [ -f $DESTINATION_FILE ]; then
 			echo -e "$DESTINATION_FILE already exists. Skipping\n\n"
 			continue
