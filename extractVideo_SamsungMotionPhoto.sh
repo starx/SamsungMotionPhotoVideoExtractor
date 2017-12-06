@@ -41,24 +41,29 @@ function extractVideo_SamsungMotionPhoto {
 		# Extract the filename
 		FILE_NAME=$(echo `basename $FILE_PATH` | cut -f 1 -d '.')
 
+		# Generate a full path of destination file
+		DESTINATION_FILE="$FILE_DIRECTORY/$FILE_NAME.mp4"
+
+		if [ -f $DESTINATION_FILE ]; then
+			echo -e "$DESTINATION_FILE already exists. Skipping\n\n"
+			continue
+		fi
+
 		# Extract the position in the image file, from where video starts
 		VIDEO_OFFSET=`grep -abo $SEPARATOR $FILE_PATH | cut -d: -f1`
 
 		# If offset is empty, video does not exists
 		if [ -z "$VIDEO_OFFSET" ]; then
-			echo "Video not found. Skipping."
-		else
-			# Generate a full path of destination file
-			DESTINATION_FILE="$FILE_DIRECTORY/$FILE_NAME.mp4"
-			# Extract the remainder of the file from image and save it as a mp4 file
-			tail -c +$(($VIDEO_OFFSET + $SEPARATOR_OFFSET)) $FILE_PATH > $DESTINATION_FILE
-			echo "Video found. Extracting to $DESTINATION_FILE"
+			echo -e "Video not found. Skipping.\n\n"
+			continue
 		fi
-		echo
-		echo
+
+		# Extract the remainder of the file from image and save it as a mp4 file
+		tail -c +$(($VIDEO_OFFSET + $SEPARATOR_OFFSET)) $FILE_PATH > $DESTINATION_FILE
+		echo -e "Video found. Extracting to $DESTINATION_FILE\n\n"
 
 	done
 }
 
-#Usage
+# Usage
 extractVideo_SamsungMotionPhoto "$@"
